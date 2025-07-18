@@ -242,7 +242,7 @@ task-manager-api/
 ### SMS Monitoring Platform
 ```bash
 # Clone the repository
-git clone (https://github.com/alibenkeddab2-cmd/sms-monitoring-platform)
+git clone https://github.com/alibenkeddab2-cmd/sms-monitoring-platform.git
 cd sms-monitoring-platform
 
 # Start with Docker Compose
