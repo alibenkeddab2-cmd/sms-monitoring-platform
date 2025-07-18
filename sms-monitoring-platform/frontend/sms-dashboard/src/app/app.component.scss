@@ -1,0 +1,41 @@
+.app-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.app-container {
+  margin-top: 64px;
+  height: calc(100vh - 64px);
+}
+
+.app-sidenav {
+  width: 250px;
+  background-color: #f5f5f5;
+}
+
+.app-content {
+  padding: 0;
+}
+
+.content-wrapper {
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.active {
+  background-color: rgba(63, 81, 181, 0.1) !important;
+  color: #3f51b5 !important;
+  
+  mat-icon {
+    color: #3f51b5 !important;
+  }
+}
+

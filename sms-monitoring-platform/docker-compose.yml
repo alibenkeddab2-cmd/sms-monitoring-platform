@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: sms-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sms_monitoring
+      MYSQL_USER: smsuser
+      MYSQL_PASSWORD: smspassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - sms-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: sms-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - sms-network
+
+  config-server:
+    build: ./backend/config-server
+    container_name: sms-config-server
+    ports:
+      - "8888:8888"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - sms-network
+
+  eureka-server:
+    build: ./backend/eureka-server
+    container_name: sms-eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - config-server
+    networks:
+      - sms-network
+
+  gateway-service:
+    build: ./backend/gateway-service
+    container_name: sms-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - config-server
+      - eureka-server
+    networks:
+      - sms-network
+
+  sms-service:
+    build: ./backend/sms-service
+    container_name: sms-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=sms_monitoring
+      - DB_USER=smsuser
+      - DB_PASSWORD=smspassword
+    depends_on:
+      - mysql
+      - config-server
+      - eureka-server
+    networks:
+      - sms-network
+
+  notification-service:
+    build: ./backend/notification-service
+    container_name: sms-notification-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+      - config-server
+      - eureka-server
+    networks:
+      - sms-network
+
+  monitoring-service:
+    build: ./backend/monitoring-service
+    container_name: sms-monitoring-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - config-server
+      - eureka-server
+    networks:
+      - sms-network
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  sms-network:
+    driver: bridge
+

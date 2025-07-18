@@ -1,0 +1,207 @@
+.dashboard-container {
+  padding: 20px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  
+  h1 {
+    margin: 0;
+    color: #333;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  .stat-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    
+    .stat-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      
+      mat-icon {
+        font-size: 24px;
+        color: white;
+      }
+    }
+    
+    .stat-info {
+      h3 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: bold;
+      }
+      
+      p {
+        margin: 0;
+        color: #666;
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  &.total .stat-icon {
+    background-color: #3f51b5;
+  }
+  
+  &.delivered .stat-icon {
+    background-color: #4CAF50;
+  }
+  
+  &.sent .stat-icon {
+    background-color: #2196F3;
+  }
+  
+  &.pending .stat-icon {
+    background-color: #FF9800;
+  }
+  
+  &.failed .stat-icon {
+    background-color: #F44336;
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+  
+  p {
+    margin-top: 20px;
+    color: #666;
+  }
+}
+
+.dashboard-content {
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.chart-card {
+  .chart-container {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.recent-messages-card {
+  .recent-messages-list {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .message-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    .message-info {
+      flex: 1;
+      
+      .message-id {
+        font-weight: bold;
+        color: #3f51b5;
+        margin-bottom: 5px;
+      }
+      
+      .message-details {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+        color: #666;
+      }
+      
+      .message-content {
+        color: #333;
+        font-size: 0.9rem;
+      }
+    }
+    
+    .message-status {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      
+      .message-time {
+        font-size: 0.8rem;
+        color: #999;
+      }
+    }
+  }
+  
+  .no-messages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    color: #999;
+    
+    mat-icon {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+// Status chip colors
+.status-pending {
+  background-color: #FF9800 !important;
+  color: white !important;
+}
+
+.status-sent {
+  background-color: #2196F3 !important;
+  color: white !important;
+}
+
+.status-delivered {
+  background-color: #4CAF50 !important;
+  color: white !important;
+}
+
+.status-failed {
+  background-color: #F44336 !important;
+  color: white !important;
+}
+
+.status-expired {
+  background-color: #9E9E9E !important;
+  color: white !important;
+}
+
